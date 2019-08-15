@@ -9,8 +9,8 @@ class App extends React.Component {
     this.state = {
       user: [
         {
-          username: 'unknown',
-          roomname: 'unknown',
+          username: '다니엘',
+          roomname: '새방',
         }
       ],
     }

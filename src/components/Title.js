@@ -9,16 +9,16 @@ export default function Title() {
 }
 
 const titleDiv = {
-    backgroundColor: 'darkblue',
+    backgroundColor: '#333',
     position: 'relative',
     margin: '0',
     height: '100px',
     textAlign: 'center',
 }
-
 const title = {
     position: 'relative',
     top: '30%',
     margin: 'auto',
-    color: '#f0ffff',
+    color: '#ffffff',
+    fontFamily: 'La Belle Aurore'
 }

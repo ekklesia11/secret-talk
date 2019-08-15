@@ -7,44 +7,79 @@ class Room extends React.Component {
         super(props)
         this.state = {
             talks: [],
+            write: '',
         }
-        this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick() {
-        let input = document.getElementsByClassName('inputArea');
-        if (input[0].value !== '') {
+    componentDidMount() {
+        // setInterval(() => (fetch('http://localhost:3001/messages')
+        //   .then(res => res.json())
+        //   .then(messages => {
+        //       this.setState({
+        //           talks: messages,
+        //       })
+        //   })
+        // ), 300)
+    }
+
+    newWrite = (e) => {
+        this.setState({
+            write: e.target.value,
+        })
+    }
+
+    handleClick = () => {
+        let input = this.state.write;
+        if (input !== '') {
             let obj = {};
-            obj.talk = input[0].value;
+            obj.talk = input;
             obj.talker = this.props.user[0].username;
+            // fetch('http://localhost:3001/messages', {
+            //     method: 'POST',
+            //     body: JSON.stringify(obj),
+            //     headers: {
+            //       "Content-Type": "application/json"
+            //     }
+            // })
+            //   .then(res => res.json())
+            // this.setState({
+            //     write: '',
+            // })
             this.setState({
-                talks: this.state.talks.concat(obj)
+                talks: this.state.talks.concat(obj),
+                write: '',
             })
         }
-        input[0].value = '';
+        
     }
 
     onEnter = (e) => {
-        let input = document.getElementsByClassName('inputArea');
-        if (e.charCode === 13 && input[0].value !== '') {
-            let obj = {};
-            obj.talk = input[0].value;
-            obj.talker = this.props.user[0].username;
-            this.setState({
-                talks: this.state.talks.concat(obj)
-            })
-        input[0].value = '';
+        if (e.charCode === 13) {
+            this.handleClick()
         }
     }
 
     render() {
         return (
-            <div>
+            <div style={room}>
                 <RoomStatus user={this.props.user}/>
-                <ChatBox talks={this.state.talks} handleClick={this.handleClick} onEnter={this.onEnter}/>
+                <ChatBox 
+                user={this.props.user[0]}
+                talks={this.state.talks} 
+                handleClick={this.handleClick} 
+                onEnter={this.onEnter}
+                newWrite={this.newWrite}
+                write={this.state.write}/>
             </div>
         )
     }
 }
 
 export default Room;
+
+const room = {
+    position: 'absolute',
+    width: '100%',
+    fontFamily: 'Nanum Gothic Coding',
+    fontSize: '0.8rem',
+}
